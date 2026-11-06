@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,81 +19,176 @@
     body {
       margin: 0;
       min-height: 100svh;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
+      overflow-x: hidden;
       background: #050509;
-      font-family: Arial, sans-serif;
+      color: white;
+      font-family: Tahoma, Arial, sans-serif;
       isolation: isolate;
     }
 
-    /* แสง RGB พื้นหลัง */
+    /* แสงพื้นหลัง RGB */
     .ambient {
       position: fixed;
-      inset: -30%;
+      inset: -40%;
       z-index: -2;
       pointer-events: none;
       background:
         radial-gradient(
-          ellipse at 25% 35%,
-          #ff008033,
+          ellipse at 25% 30%,
+          #ff008035,
           transparent 45%
         ),
         radial-gradient(
-          ellipse at 75% 65%,
-          #00d9ff33,
+          ellipse at 75% 70%,
+          #00d9ff35,
           transparent 45%
         ),
         radial-gradient(
           ellipse at 50% 50%,
-          #9500ff22,
+          #9900ff25,
           transparent 55%
         );
-      animation: ambient-rgb 16s linear infinite;
+      animation: background-rgb 12s linear infinite;
     }
 
-    /* ตารางบาง ๆ */
     .grid {
       position: fixed;
       inset: 0;
       z-index: -1;
       pointer-events: none;
       background-image:
-        linear-gradient(#ffffff05 1px, transparent 1px),
-        linear-gradient(90deg, #ffffff05 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse, black, transparent 80%);
+        linear-gradient(#ffffff06 1px, transparent 1px),
+        linear-gradient(90deg, #ffffff06 1px, transparent 1px);
+      background-size: 55px 55px;
+      mask-image: radial-gradient(ellipse, black, transparent 85%);
     }
 
     main {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      padding: 40px 20px 60px;
+    }
+
+    /* พื้นที่สำหรับชื่อหมุน */
+    .spin-stage {
+      width: min(80vw, 420px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .spin-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        #932bff25,
+        #00d9ff0a 45%,
+        transparent 70%
+      );
+      filter: blur(15px);
+    }
+
+    /* หมุนหนึ่งรอบต่อวินาที */
+    .rotator {
       width: 100%;
-      padding: 32px 20px;
+      animation: spin 1s linear infinite;
+      will-change: transform;
+    }
+
+    .spinning-name {
+      margin: 0;
+      text-align: center;
+      white-space: nowrap;
+      font-family: Arial, sans-serif;
+      font-size: clamp(16px, 4vw, 23px);
+      font-weight: 900;
+      line-height: 1.3;
+      letter-spacing: -0.04em;
+      color: #ff60bc;
+      text-shadow:
+        0 0 6px currentColor,
+        0 0 20px currentColor,
+        0 0 50px currentColor;
+      animation:
+        text-rgb 3s linear infinite,
+        neon-pulse 2s ease-in-out infinite;
+    }
+
+    /* ชื่อด้านล่างอยู่นิ่ง */
+    .static-name {
+      position: relative;
+      margin: 0;
+      max-width: 100%;
+      text-align: center;
+      text-wrap: balance;
+      font-family: Arial, sans-serif;
+      font-size: clamp(24px, 5vw, 44px);
+      font-weight: 800;
+      line-height: 1.4;
+      letter-spacing: -0.03em;
+      color: white;
+      text-shadow: 0 0 18px #ffffff35;
+    }
+
+    /* กล่องบทกาพย์ */
+    .poem-card {
+      width: min(100%, 560px);
+      padding: clamp(24px, 5vw, 40px);
+      border: 1px solid #b79aff60;
+      border-radius: 24px;
+      background: linear-gradient(
+        145deg,
+        #171323ee,
+        #090d17ee
+      );
+      box-shadow:
+        0 0 30px #9560ff18,
+        0 20px 60px #0006;
       text-align: center;
     }
 
-    h1 {
-      position: relative;
-      z-index: 1;
-      margin: 0;
-      color: #ff5ab9;
-      font-size: clamp(28px, 6vw, 110px);
-      font-weight: 900;
-      line-height: 1.4;
-      letter-spacing: -0.035em;
-      text-wrap: balance;
-      text-shadow:
-        0 0 8px currentColor,
-        0 0 25px currentColor,
-        0 0 65px currentColor;
-      animation:
-        text-rgb 10s linear infinite,
-        shimmer 4s ease-in-out infinite;
+    .poem-card h2 {
+      margin: 0 0 8px;
+      font-size: clamp(20px, 4vw, 26px);
+      font-weight: 700;
+      color: #e1d2ff;
     }
 
-    /* ประกายแสง */
+    .poem-type {
+      margin: 0 0 24px;
+      color: #aaa2bd;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .verse {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: #f4f0ff;
+      font-size: clamp(19px, 4vw, 24px);
+      line-height: 1.8;
+    }
+
+    .verse p {
+      margin: 0;
+    }
+
+    /* ประกายวิบวับ */
     .sparkles {
       position: fixed;
       inset: 0;
+      z-index: -1;
       pointer-events: none;
       overflow: hidden;
     }
@@ -102,15 +197,13 @@
       position: absolute;
       width: var(--size);
       height: var(--size);
-      color: #b8f6ff;
-      background: currentColor;
       border-radius: 50%;
-      box-shadow: 0 0 10px 2px currentColor;
+      color: #a9efff;
+      background: currentColor;
+      box-shadow: 0 0 12px 2px currentColor;
       opacity: 0;
-      animation:
-        twinkle var(--duration) ease-in-out infinite,
-        spark-rgb 12s linear infinite;
-      animation-delay: var(--delay), 0s;
+      animation: twinkle var(--duration) ease-in-out infinite;
+      animation-delay: var(--delay);
     }
 
     .spark::before,
@@ -126,53 +219,63 @@
 
     .spark::before {
       width: 1px;
-      height: 12px;
+      height: 11px;
     }
 
     .spark::after {
-      width: 12px;
+      width: 11px;
       height: 1px;
     }
 
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
     @keyframes text-rgb {
-      0%, 100% { color: #ff5ab9; }
-      20% { color: #ffb85a; }
-      40% { color: #dcff70; }
-      60% { color: #63ffc5; }
-      80% { color: #68d7ff; }
-      90% { color: #b995ff; }
+      0%, 100% { color: #ff60bc; }
+      20% { color: #ffb45b; }
+      40% { color: #e5ff64; }
+      60% { color: #55ffb4; }
+      80% { color: #57d7ff; }
+      90% { color: #bb8aff; }
     }
 
-    @keyframes shimmer {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .72; }
-    }
-
-    @keyframes ambient-rgb {
-      to {
-        filter: hue-rotate(360deg);
-        transform: rotate(20deg);
+    @keyframes neon-pulse {
+      0%, 100% {
+        opacity: 1;
+        text-shadow:
+          0 0 6px currentColor,
+          0 0 24px currentColor,
+          0 0 60px currentColor;
       }
+
+      50% {
+        opacity: .65;
+        text-shadow:
+          0 0 3px currentColor,
+          0 0 12px currentColor,
+          0 0 30px currentColor;
+      }
+    }
+
+    @keyframes background-rgb {
+      to { filter: hue-rotate(360deg); }
     }
 
     @keyframes twinkle {
       0%, 100% {
         opacity: 0;
-        transform: translateY(12px) scale(.3);
+        transform: scale(.3);
       }
 
       50% {
-        opacity: .85;
-        transform: translateY(-12px) scale(1);
+        opacity: .8;
+        transform: scale(1);
       }
     }
 
-    @keyframes spark-rgb {
-      to {
-        filter: hue-rotate(360deg);
-      }
-    }
-
+    /* หยุดเอฟเฟกต์เมื่อเครื่องตั้งค่าลดการเคลื่อนไหว */
     @media (prefers-reduced-motion: reduce) {
       *,
       *::before,
@@ -193,22 +296,48 @@
   <div class="sparkles" aria-hidden="true"></div>
 
   <main>
-    <h1>Suparuek Jongprachan 12</h1>
+    <!-- ชื่อหมุนพร้อมไฟ RGB -->
+    <div class="spin-stage" aria-hidden="true">
+      <div class="rotator">
+        <p class="spinning-name">Suparuek Jongprachan 12</p>
+      </div>
+    </div>
+
+    <!-- ชื่ออยู่นิ่ง -->
+    <h1 class="static-name" lang="en">
+      Suparuek Jongprachan 12
+    </h1>
+
+    <!-- กาพย์สุรางคนางค์ ๒๘ เรื่องรักการเรียน -->
+    <section class="poem-card" aria-labelledby="poem-title">
+      <h2 id="poem-title">รักการเรียน</h2>
+      <p class="poem-type">กาพย์สุรางคนางค์ ๒๘</p>
+
+      <div class="verse">
+        <p>รักเรียนเพียรอ่าน</p>
+        <p>ฝึกเขียนทุกกาล</p>
+        <p>สืบสานวิชา</p>
+        <p>ตั้งจิตคิดใฝ่</p>
+        <p>เติมใจค้นหา</p>
+        <p>เพิ่มพูนปัญญา</p>
+        <p>นำพาชีวิต</p>
+      </div>
+    </section>
   </main>
 
   <script>
     const container = document.querySelector(".sparkles");
     const fragment = document.createDocumentFragment();
 
-    for (let i = 0; i < 45; i++) {
+    for (let i = 0; i < 40; i++) {
       const spark = document.createElement("span");
 
       spark.className = "spark";
       spark.style.left = `${Math.random() * 100}%`;
       spark.style.top = `${Math.random() * 100}%`;
       spark.style.setProperty("--size", `${2 + Math.random() * 2}px`);
-      spark.style.setProperty("--duration", `${3 + Math.random() * 5}s`);
-      spark.style.setProperty("--delay", `${-Math.random() * 8}s`);
+      spark.style.setProperty("--duration", `${3 + Math.random() * 4}s`);
+      spark.style.setProperty("--delay", `${-Math.random() * 7}s`);
 
       fragment.appendChild(spark);
     }
